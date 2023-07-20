@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Input, Button } from '@mantine/core';
+import { Input, Textarea, Button } from '@mantine/core';
 import './Chat.css'; // Import the CSS file
-import { ChevronIcon } from '@mantine/core';
 import { RiSendPlane2Line } from 'react-icons/ri';
+import MessageContainer from './MessageContainer';
 
 const Chat = () => {
   const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
@@ -14,6 +15,8 @@ const Chat = () => {
   const handleSendMessage = () => {
     // Add your logic to handle sending the message
     console.log('Sending message:', message);
+    // Add the new message to the messages array
+    setMessages([...messages, message]);
     setMessage('');
   };
 
@@ -26,8 +29,9 @@ const Chat = () => {
 
   return (
     <div className="chat-container">
+      <MessageContainer messages={messages} />
       <div className="input-container">
-        <Input
+        <Textarea
           value={message}
           onChange={handleMessageChange}
           placeholder="Type your message..."
@@ -40,7 +44,7 @@ const Chat = () => {
             variant="subtle"
             color="blue">
               <RiSendPlane2Line />
-              </Button>
+            </Button>
           }
         />
       </div>
