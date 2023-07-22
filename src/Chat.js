@@ -3,6 +3,7 @@ import { Textarea, Button } from '@mantine/core';
 import './Chat.css'; // Import the CSS file
 import { RiSendPlane2Line } from 'react-icons/ri';
 import { ChatFeed, Message } from 'react-chat-ui';
+import ReactMarkdown from 'react-markdown';
 
 const Chat = () => {
   const [message, setMessage] = useState('');
@@ -51,11 +52,17 @@ const Chat = () => {
   return (
     <div className="chat-container">
       <ChatFeed className="message-pannel"
-        messages={messages.map((msg) => msg)}
+        messages={messages.map((msg) => ({
+          ...msg,
+          message: (
+            <ReactMarkdown>{msg.message}</ReactMarkdown>
+          ),
+        }))}
         showSenderName
         bubbleStyles={{ text: { fontSize: 16, lineHeight: '1.5' },
         chatbubble: { boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
-                      background: 'linear-gradient(135deg, #00b4db, #0083b0)'
+                      background: 'linear-gradient(135deg, #00b4db, #0083b0)',
+                      overflow: 'auto'
                     },
         userBubble: {
           boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
