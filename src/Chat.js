@@ -3,22 +3,32 @@ import { Textarea, Button } from '@mantine/core';
 import './Chat.css'; // Import the CSS file
 import { RiSendPlane2Line } from 'react-icons/ri';
 import { ChatFeed, Message } from 'react-chat-ui';
-import MessageContainer from './MessageContainer';
 
 const Chat = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
+  const [isTyping, setIsTyping] = useState(false);
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
   };
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     // Add your logic to handle sending the message
     console.log('Sending message:', message);
     // Add the new message to the messages array
-    setMessages([...messages, new Message({id: 1, message})]);
+    const userMessage = new Message({id: 0, message});
+    setMessages([...messages, userMessage]);
     setMessage('');
+    await sendResponse(userMessage);
+  };
+
+  const sendResponse = async (userMessage) => {
+    setIsTyping(true);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const response = 'This is the response from the server.';
+    setMessages([...messages, userMessage, new Message({ id: 1, message: response, senderName: 'Computer' })]);
+    setIsTyping(false);
   };
 
   const handleKeyPress = (event) => {
@@ -33,7 +43,9 @@ const Chat = () => {
       <ChatFeed className="message-pannel"
         messages={messages.map((msg) => msg)}
         showSenderName
+        bubbleStyles={{ text: { fontSize: 16 } }}
       />
+      {isTyping && <div className="computer-typing">Generating response...</div>}
       <div className="input-container">
         <Textarea
           value={message}
