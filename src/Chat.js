@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Input, Textarea, Button } from '@mantine/core';
+import { Textarea, Button } from '@mantine/core';
 import './Chat.css'; // Import the CSS file
 import { RiSendPlane2Line } from 'react-icons/ri';
+import { ChatFeed, Message } from 'react-chat-ui';
 import MessageContainer from './MessageContainer';
 
 const Chat = () => {
@@ -16,7 +17,7 @@ const Chat = () => {
     // Add your logic to handle sending the message
     console.log('Sending message:', message);
     // Add the new message to the messages array
-    setMessages([...messages, message]);
+    setMessages([...messages, new Message({id: 1, message})]);
     setMessage('');
   };
 
@@ -29,7 +30,10 @@ const Chat = () => {
 
   return (
     <div className="chat-container">
-      <MessageContainer messages={messages} />
+      <ChatFeed className="message-pannel"
+        messages={messages.map((msg) => msg)}
+        showSenderName
+      />
       <div className="input-container">
         <Textarea
           value={message}

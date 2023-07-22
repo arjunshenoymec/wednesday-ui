@@ -4,8 +4,7 @@ import Chat from './Chat';
 
 function App() {
   return (
-    <div className="App">
-      <h1>My Chat App</h1>
+    <div className="app-container">
       <Chat />
     </div>
   );

@@ -28,6 +28,22 @@
   color: #61dafb;
 }
 
+/* Chat.css */
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.chat-container {
+  height: 1000px; /* Set a fixed height for the chat container */
+  overflow-y: auto; /* Enable vertical scrolling when content overflows */
+  padding: 10px; /* Add some padding for spacing */
+}
+
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

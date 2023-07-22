@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import './MessageContainer.css';
-import { Table, ScrollArea } from '@mantine/core';
+import { Table } from '@mantine/core';
 
 const MessageContainer = ({ messages }) => {
   const messageTableRef = useRef(null);
@@ -15,7 +15,7 @@ const MessageContainer = ({ messages }) => {
 
   return (
     <div className="message-container">
-      <Table striped>
+      <Table striped ref={messageTableRef}>
         <tbody>
           {messages.map((message, index) => (
             <tr>
