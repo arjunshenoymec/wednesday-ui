@@ -81,8 +81,9 @@ const Chat = () => {
           rightSection={
             <Button 
             onClick={handleSendMessage}
-            style={{ marginLeft: '-20px' }}
-            variant="subtle"
+            style={{ marginLeft: '-35px', fontSize: '20px' }}
+            variant="white"
+            size={"md"}
             color="blue">
               <RiSendPlane2Line />
             </Button>
