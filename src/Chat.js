@@ -17,7 +17,7 @@ const Chat = () => {
     // Add your logic to handle sending the message
     console.log('Sending message:', message);
     // Add the new message to the messages array
-    const userMessage = new Message({id: 0, message});
+    const userMessage = new Message({id: 0, message: message, senderName: 'User'});
     setMessages([...messages, userMessage]);
     setMessage('');
     await sendResponse(userMessage);
@@ -25,9 +25,19 @@ const Chat = () => {
 
   const sendResponse = async (userMessage) => {
     setIsTyping(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    const response = 'This is the response from the server.';
-    setMessages([...messages, userMessage, new Message({ id: 1, message: response, senderName: 'Computer' })]);
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
+    const {message} = userMessage;
+    const url = 'http://localhost:8080/query';
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({message: message})
+    });
+    const data = await response.json();
+    const reply = data.response;
+    setMessages([...messages, userMessage, new Message({ id: 1, message: reply, senderName: 'Wednesday' })]);
     setIsTyping(false);
   };
 
@@ -43,7 +53,15 @@ const Chat = () => {
       <ChatFeed className="message-pannel"
         messages={messages.map((msg) => msg)}
         showSenderName
-        bubbleStyles={{ text: { fontSize: 16 } }}
+        bubbleStyles={{ text: { fontSize: 16, lineHeight: '1.5' },
+        chatbubble: { boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+                      background: 'linear-gradient(135deg, #00b4db, #0083b0)'
+                    },
+        userBubble: {
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+          background: 'linear-gradient(135deg, #cccccc, #999999)'
+        }
+       }}
       />
       {isTyping && <div className="computer-typing">Generating response...</div>}
       <div className="input-container">
