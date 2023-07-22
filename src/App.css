@@ -37,7 +37,7 @@
 }
 
 .chat-container {
-  height: 850px; /* Set a fixed height for the chat container */
+  height: 770px; /* Set a fixed height for the chat container */
   overflow-y: auto; /* Enable vertical scrolling when content overflows */
   padding: 10px; /* Add some padding for spacing */
 }
